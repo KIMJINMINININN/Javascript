@@ -1,0 +1,64 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>구구단</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <div>{{first}}곱하기 {{second}}는?</div>
+        <form v-on:submit="onSubmitForm">
+            <input type="number" ref="answer" v-model="value">
+            <button type="submit">입력</button>
+        </form>
+        <div id="result">{{result}}</div>
+    </div>
+</body>
+    <script>
+        const app = new Vue({
+            el: '#root',
+            data: {
+                first: Math.ceil(Math.random() * 9),
+                second: Math.ceil(Math.random() * 9),
+                value: '',
+                result: '',
+            },
+            methods: {
+                onSubmitForm(e) {
+                    e.preventDefault();
+                    console.log(this);
+                    console.log(this.frist, this.second, this.value);
+                    if (this.first * this.second === parseInt(this.value)){
+                        this.result = "정답";
+                        this.first = Math.ceil(Math.random() * 9),
+                        this.second = Math.ceil(Math.random() * 9),
+                        this.value = '';
+                        this.$refs.answer.focus();
+                    }
+                    else {
+                        this.result = "땡";
+                        this.value = '';
+                    }
+                },
+            },
+        });
+    </script>
+</html>
+<!-- 
+    data에 접근하는 방법 
+    1. {{}}로 그냥 나타낼때 html에서
+    2. <div v-if="first" 처럼 태그안에 나타낼때
+    3. methods안에서 this.first라고 접근할때
+    
+    또한 {{}}안에다가 javascrpit식을 사용할수가있다
+
+    v-model
+
+    e.preventDefault를 넣는 이유는 싱글페이지를 사용하는 Vue.js의 새로고침을막기위해서사용
+
+    parseInt()는 Int로 형변환 만들어준다
+
+    vue.js에서는 ref라는것으로 이름을 지어준다. this.$refs.answer이렇게 적으면 부르는것이 가능하다
+    ref를 사용할때에는 직접 입력하는것은 하지않은다. 대부분은 data를 연동시켜서 만들어야하는것이다
+-->

@@ -1,0 +1,30 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>좋아요</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <!-- v-if = "이곳안에는 Javascrpit가 들어갈수있다"-->
+        <div v-if="liked">좋아요 눌렀음</div>
+        <button v-else v-on:click="onClickButton">Like</button>
+    </div>
+</body>
+<script>
+        const app = new Vue({
+            el: '#root',
+            data: {
+                liked: false,
+            },
+            methods: {
+                onClickButton() {
+                    this.liked = true;
+                },
+            },
+        });
+</script>
+</html>
+<!--Vue app 안에 el, data, methods는 항상 지켜져야하며, data 중심적으로 사고해야한다-->
+<!-- 또한 this는 data를 의마하므로 this.liked는 data의 값에 접근하기위한 방법이다-->

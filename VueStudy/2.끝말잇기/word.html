@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>끝말잇기</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <word-realy start-word="테스트"> </word-realy>
+        <word-realy start-word="초밥"> </word-realy>
+        <word-realy start-word="배고파"> </word-realy>
+    </div>
+    <script>
+        Vue.component('word-realy', { //전역 컴포넌트라고 부른다
+            template: `
+            <div>
+            <div>{{word}}</div>
+                <form v-on:submit="onSubmitForm">
+                    <input type="text" ref = answer v-model ="value">
+                    <button type="submit">입력!</button>
+                </form>
+            <div>{{result}}</div>
+            </div>
+            `,
+            props : ['startWord'],
+            data(){
+                console.log
+                return {
+                word : this.startWord,
+                result : " ",
+                value : " ",
+                };
+            },
+            methods:{
+                onSubmitForm(e) {
+                    e.preventDefault();
+                    if  (this.word[this.word.length - 1] === this.value[0]) {
+                        this.result = '딩동댕';
+                        this.word = this.value;
+                        this.value = '';
+                        this.$refs.answer.focus();
+                    }
+                    else {
+                        this.result = '땡';
+                        this.value = '';
+                        this.$refs.answer.focus();
+                    }
+                },
+            },
+        });
+    </script>
+    <script>
+        const app = new Vue({
+            el : "#root",
+            });
+    </script>
+</body>
+</html>
+<!-- 
+    `  ` 백틱이라고하는데 줄바꿈을 하는데 편하다 
+
+    component안에 들어가는 내용들은 template, data, methods로 나뉜다.
+    template안에 들어가는 내용이 내가 반복해서 적용시키는 원하는 코드들
+
+    Component를 만들때는 data를 함수형식으로 만들어야한다
+    컴포넌트가 여러번 사용되기때문에 데이터가 각각의 컴포넌트마다 달라야한다
+    아니면 똑같은 값이 참조가 되기때문에 데이터가 분리가 안되게된다.
+    또한 Component의 template는 하나의 부모형식으로 감싸주어야한다
+
+-->
